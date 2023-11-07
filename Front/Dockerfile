@@ -1,24 +1,21 @@
-# Use an official Node runtime as the base image
+# Stage 1: Build the Angular app
 FROM node:14 as build
 
-# Set the working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install
 
-# Copy the rest of the application source code
 COPY . .
 
-# Build the application
 RUN npm run build --prod
 
-# Use a lightweight HTTP server to serve the static files
+# Stage 2: Serve the app with Nginx
 FROM nginx:alpine
-COPY --from=build /usr/src/app/dist/* /usr/share/nginx/html/
 
-# Expose port 4200
+COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+
 EXPOSE 4200
+
+CMD ["nginx", "-g", "daemon off;"]
