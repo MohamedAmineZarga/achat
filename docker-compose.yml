@@ -16,7 +16,7 @@ services:
 
   achatapplication:
     container_name: achatapplication-container
-    image: z4rga/achat-app
+    image: z4rga/achat-app:1.0.0
     ports:
       - "8089:8089"
     depends_on:
@@ -26,6 +26,15 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysqldb:3306/achatdb?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: ""
+    networks:
+      - apinetwork
+
+  angularfrontend:
+    container_name: angularfrontend-container
+    image: z4rga/achat-front:1.0
+    ports:
+      - "4200:4200"
+    restart: unless-stopped
     networks:
       - apinetwork
 
