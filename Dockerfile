@@ -1,3 +1,4 @@
+# Utilisation de l'image OpenJDK 11 comme base
 FROM openjdk:11
 
 # Copie du fichier JAR de l'application depuis le build précédent

@@ -40,6 +40,7 @@ services:
 
 volumes:
   db_data: {}
+
 networks:
   apinetwork:
     driver: bridge
